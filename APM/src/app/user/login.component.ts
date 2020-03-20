@@ -4,7 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 import { AuthService } from './auth.service';
 import { Store, select } from '@ngrx/store';
-import * as fromUser from './state/user.reducer';
+import * as fromUser from './state';
 import * as userActions from './state/user.actions';
 import { takeWhile } from 'rxjs/operators';
 
