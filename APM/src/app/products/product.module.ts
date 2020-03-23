@@ -12,21 +12,19 @@ import { reducer } from './state/product.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { ProductEffects } from './state/product.effects';
 
-const productRoutes: Routes = [
-  { path: '', component: ProductShellComponent }
-];
+const productRoutes: Routes = [{ path: '', component: ProductShellComponent }];
 
 @NgModule({
   imports: [
     SharedModule,
     RouterModule.forChild(productRoutes),
     StoreModule.forFeature('products', reducer),
-    EffectsModule.forFeature([ProductEffects])
+    EffectsModule.forFeature([ProductEffects]),
   ],
   declarations: [
     ProductShellComponent,
     ProductListComponent,
-    ProductEditComponent
-  ]
+    ProductEditComponent,
+  ],
 })
-export class ProductModule { }
+export class ProductModule {}

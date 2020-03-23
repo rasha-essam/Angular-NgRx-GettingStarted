@@ -1,4 +1,12 @@
-import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  Output,
+  EventEmitter,
+  SimpleChanges,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { Product } from '../../product';
@@ -9,7 +17,7 @@ import { NumberValidators } from '../../../shared/number.validator';
   selector: 'pm-product-edit',
   templateUrl: './product-edit.component.html',
   styleUrls: ['./product-edit.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProductEditComponent implements OnInit {
   pageTitle = 'Product Edit';
@@ -20,7 +28,7 @@ export class ProductEditComponent implements OnInit {
   @Input()
   errorMessage: string;
   @Output()
-  saveProductAction = new EventEmitter<Product>()
+  saveProductAction = new EventEmitter<Product>();
   @Output()
   deleteProductAction = new EventEmitter<Product>();
 
@@ -30,21 +38,20 @@ export class ProductEditComponent implements OnInit {
   private genericValidator: GenericValidator;
 
   constructor(private fb: FormBuilder) {
-
     // Defines all of the validation messages for the form.
     // These could instead be retrieved from a file or database.
     this.validationMessages = {
       productName: {
         required: 'Product name is required.',
         minlength: 'Product name must be at least three characters.',
-        maxlength: 'Product name cannot exceed 50 characters.'
+        maxlength: 'Product name cannot exceed 50 characters.',
       },
       productCode: {
-        required: 'Product code is required.'
+        required: 'Product code is required.',
       },
       starRating: {
-        range: 'Rate the product between 1 (lowest) and 5 (highest).'
-      }
+        range: 'Rate the product between 1 (lowest) and 5 (highest).',
+      },
     };
 
     // Define an instance of the validator for use with this form,
@@ -56,22 +63,29 @@ export class ProductEditComponent implements OnInit {
     console.log('onInit');
     // Define the form group
     this.productForm = this.fb.group({
-      productName: ['', [Validators.required,
-      Validators.minLength(3),
-      Validators.maxLength(50)]],
+      productName: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(50),
+        ],
+      ],
       productCode: ['', Validators.required],
       starRating: ['', NumberValidators.range(1, 5)],
-      description: ''
+      description: '',
     });
 
     // Watch for value changes
     this.productForm.valueChanges.subscribe(
-      value => this.displayMessage = this.genericValidator.processMessages(this.productForm)
+      (value) =>
+        (this.displayMessage = this.genericValidator.processMessages(
+          this.productForm
+        ))
     );
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-
     // patch form with value from the store
     if (changes.selectedProduct) {
       const product: any = changes.selectedProduct.currentValue as Product;
@@ -82,7 +96,9 @@ export class ProductEditComponent implements OnInit {
   // Also validate on blur
   // Helpful if the user tabs through required fields
   blur(): void {
-    this.displayMessage = this.genericValidator.processMessages(this.productForm);
+    this.displayMessage = this.genericValidator.processMessages(
+      this.productForm
+    );
   }
 
   displayProduct(product): void {
@@ -102,7 +118,7 @@ export class ProductEditComponent implements OnInit {
         productName: this.selectedProduct.productName,
         productCode: this.selectedProduct.productCode,
         starRating: this.selectedProduct.starRating,
-        description: this.selectedProduct.description
+        description: this.selectedProduct.description,
       });
     }
   }
@@ -128,5 +144,4 @@ export class ProductEditComponent implements OnInit {
       }
     }
   }
-
 }

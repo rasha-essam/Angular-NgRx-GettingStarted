@@ -10,26 +10,28 @@ import { takeWhile } from 'rxjs/operators';
 
 @Component({
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit, OnDestroy {
-
   pageTitle = 'Log In';
   errorMessage: string;
 
   maskUserName: boolean;
   componentActive = true;
 
-  constructor(private authService: AuthService,
+  constructor(
+    private authService: AuthService,
     private router: Router,
-    private store: Store<any>) {
-  }
+    private store: Store<any>
+  ) {}
 
   ngOnInit(): void {
-    this.store.pipe(select(fromUser.getMaskUserName),
-      takeWhile(() => this.componentActive)).subscribe(
-        maskUserName => this.maskUserName = maskUserName
+    this.store
+      .pipe(
+        select(fromUser.getMaskUserName),
+        takeWhile(() => this.componentActive)
       )
+      .subscribe((maskUserName) => (this.maskUserName = maskUserName));
   }
 
   cancel(): void {

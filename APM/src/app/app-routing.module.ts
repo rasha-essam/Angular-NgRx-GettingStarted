@@ -17,18 +17,16 @@ const appRoutes: Routes = [
         path: 'products',
         // canActivate: [AuthGuard],
         loadChildren: () =>
-          import('./products/product.module').then(m => m.ProductModule)
+          import('./products/product.module').then((m) => m.ProductModule),
       },
       { path: '', redirectTo: 'welcome', pathMatch: 'full' },
-    ]
+    ],
   },
-  { path: '**', component: PageNotFoundComponent }
+  { path: '**', component: PageNotFoundComponent },
 ];
 
 @NgModule({
-  imports: [
-    RouterModule.forRoot(appRoutes)
-  ],
-  exports: [RouterModule]
+  imports: [RouterModule.forRoot(appRoutes)],
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
